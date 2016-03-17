@@ -2055,6 +2055,10 @@ hts_idx_t *hts_idx_load(const char *fn, int fmt)
     hts_idx_t *idx;
     fnidx = hts_idx_getfn(fn, ".csi");
     if (! fnidx) fnidx = hts_idx_getfn(fn, fmt == HTS_FMT_BAI? ".bai" : ".tbi");
+
+    // ICGC Data in AWS-Virginia and Cancer Collaboratory can have the following extension.
+    if (! fnidx) fnidx = hts_idx_getfn(fn, ".idx");
+
     if (fnidx == 0) return 0;
 
     idx = hts_idx_load2(fn, fnidx);
